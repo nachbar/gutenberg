@@ -47,7 +47,6 @@ export function useShowBlockTools() {
 			block?.attributes?.align === 'full' &&
 			! _showEmptyBlockSideInserter;
 		const _showBlockToolbarPopover =
-			! _showZoomOutToolbar &&
 			! getSettings().hasFixedToolbar &&
 			! _showEmptyBlockSideInserter &&
 			hasSelectedBlock &&
