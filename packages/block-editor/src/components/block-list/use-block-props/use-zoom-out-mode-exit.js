@@ -18,9 +18,11 @@ export function useZoomOutModeExit() {
 		useSelect( blockEditorStore )
 	);
 
-	const { __unstableSetEditorMode, resetZoomLevel } = unlock(
+	const { __unstableSetEditorMode } = unlock(
 		useDispatch( blockEditorStore )
 	);
+
+	const { resetZoomLevel } = useDispatch( blockEditorStore );
 
 	return useRefEffect(
 		( node ) => {

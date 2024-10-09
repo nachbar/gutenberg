@@ -27,12 +27,11 @@ export function useEventHandlers( { clientId, isSelected } ) {
 		isZoomOut,
 		__unstableGetEditorMode,
 	} = unlock( useSelect( blockEditorStore ) );
-	const {
-		insertAfterBlock,
-		removeBlock,
-		__unstableSetEditorMode,
-		resetZoomLevel,
-	} = unlock( useDispatch( blockEditorStore ) );
+	const { insertAfterBlock, removeBlock, __unstableSetEditorMode } = unlock(
+		useDispatch( blockEditorStore )
+	);
+
+	const { resetZoomLevel } = useDispatch( blockEditorStore );
 
 	return useRefEffect(
 		( node ) => {

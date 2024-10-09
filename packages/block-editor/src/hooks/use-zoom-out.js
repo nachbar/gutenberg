@@ -16,7 +16,7 @@ import { unlock } from '../lock-unlock';
  * @param {boolean} zoomOut If we should zoom out or not.
  */
 export function useZoomOut( zoomOut = true ) {
-	const { setZoomLevel } = unlock( useDispatch( blockEditorStore ) );
+	const { setZoomLevel } = useDispatch( blockEditorStore );
 	const { isZoomOut } = unlock( useSelect( blockEditorStore ) );
 
 	const originalIsZoomOutRef = useRef( null );
