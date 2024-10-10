@@ -16,7 +16,7 @@ import {
 	isReusableBlock,
 	isTemplatePart,
 } from '@wordpress/blocks';
-import { ToolbarGroup } from '@wordpress/components';
+import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -36,6 +36,7 @@ import __unstableBlockNameContext from './block-name-context';
 import NavigableToolbar from '../navigable-toolbar';
 import { useHasBlockToolbar } from './use-has-block-toolbar';
 import { unlock } from '../../lock-unlock';
+import Shuffle from './shuffle';
 
 /**
  * Renders the block toolbar.
@@ -46,6 +47,7 @@ import { unlock } from '../../lock-unlock';
  * @param {boolean}  props.hideDragHandle              Show or hide the Drag Handle for drag and drop functionality.
  * @param {boolean}  props.focusOnMount                Focus the toolbar when mounted.
  * @param {number}   props.__experimentalInitialIndex  The initial index of the toolbar item to focus.
+ * @param {boolean}  props.isZoomOutMode               Whether the toolbar is in zoom out mode.
  * @param {Function} props.__experimentalOnIndexChange Callback function to be called when the index of the focused toolbar item changes.
  * @param {string}   props.variant                     Style variant of the toolbar, also passed to the Dropdowns rendered from Block Toolbar Buttons.
  */
@@ -55,6 +57,7 @@ export function PrivateBlockToolbar( {
 	__experimentalInitialIndex,
 	__experimentalOnIndexChange,
 	variant = 'unstyled',
+	isZoomOutMode,
 } ) {
 	const {
 		blockClientId,
@@ -155,7 +158,7 @@ export function PrivateBlockToolbar( {
 
 	// Shifts the toolbar to make room for the parent block selector.
 	const classes = clsx( 'block-editor-block-contextual-toolbar', {
-		'has-parent': showParentSelector,
+		'has-parent': ! isZoomOutMode && showParentSelector,
 	} );
 
 	const innerClasses = clsx( 'block-editor-block-toolbar', {
@@ -179,7 +182,7 @@ export function PrivateBlockToolbar( {
 			key={ toolbarKey }
 		>
 			<div ref={ toolbarWrapperRef } className={ innerClasses }>
-				{ ! isMultiToolbar && isLargeViewport && (
+				{ ! isZoomOutMode && ! isMultiToolbar && isLargeViewport && (
 					<BlockParentSelector />
 				) }
 				{ ( shouldShowVisualToolbar || isMultiToolbar ) &&
@@ -202,6 +205,12 @@ export function PrivateBlockToolbar( {
 							</ToolbarGroup>
 						</div>
 					) }
+				{ isZoomOutMode && (
+					<Shuffle
+						clientId={ blockClientIds[ 0 ] }
+						as={ ToolbarButton }
+					/>
+				) }
 				{ ! hasContentOnlyLocking &&
 					shouldShowVisualToolbar &&
 					isMultiToolbar && <BlockGroupToolbar /> }
@@ -232,7 +241,9 @@ export function PrivateBlockToolbar( {
 					</>
 				) }
 				<BlockEditVisuallyButton clientIds={ blockClientIds } />
-				<BlockSettingsMenu clientIds={ blockClientIds } />
+				{ ! isZoomOutMode && (
+					<BlockSettingsMenu clientIds={ blockClientIds } />
+				) }
 			</div>
 		</NavigableToolbar>
 	);
