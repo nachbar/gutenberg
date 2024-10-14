@@ -44,7 +44,7 @@ function selector( select ) {
 		clientId,
 		hasFixedToolbar: getSettings().hasFixedToolbar,
 		isTyping: isTyping(),
-		isZoomOutMode: editorMode === 'zoom-out',
+		isZoomOutMode: editorMode === 'zoom-out' || editorMode === 'navigation',
 		isDragging: isDragging(),
 	};
 }
