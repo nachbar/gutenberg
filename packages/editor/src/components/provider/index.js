@@ -323,7 +323,7 @@ export const ExperimentalEditorProvider = withRegistryProvider(
 							useSubRegistry={ false }
 						>
 							{ children }
-							{ ! settings.__unstableIsPreviewMode && (
+							{ ! settings.isPreviewMode && (
 								<>
 									<PatternsMenuItems />
 									<TemplatePartMenuItems />
