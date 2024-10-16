@@ -414,6 +414,8 @@ const Subcategory = ( { examples, isSelected, onSelect } ) => {
 	);
 };
 
+const disabledExamples = [ 'example-duotones' ];
+
 const Example = ( { id, title, blocks, isSelected, onClick, content } ) => {
 	const originalSettings = useSelect(
 		( select ) => select( blockEditorStore ).getSettings(),
@@ -434,12 +436,20 @@ const Example = ( { id, title, blocks, isSelected, onClick, content } ) => {
 		[ blocks ]
 	);
 
+	const disabledProps = disabledExamples.includes( id )
+		? {
+				disabled: true,
+				accessibleWhenDisabled: true,
+		  }
+		: {};
+
 	return (
 		<div role="row">
 			<div role="gridcell">
 				<Composite.Item
 					className={ clsx( 'edit-site-style-book__example', {
 						'is-selected': isSelected,
+						'is-disabled-example': !! disabledProps?.disabled,
 					} ) }
 					id={ id }
 					aria-label={ sprintf(
@@ -450,6 +460,7 @@ const Example = ( { id, title, blocks, isSelected, onClick, content } ) => {
 					render={ <div /> }
 					role="button"
 					onClick={ onClick }
+					{ ...disabledProps }
 				>
 					<span className="edit-site-style-book__example-title">
 						{ title }
