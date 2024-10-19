@@ -79,6 +79,15 @@ Then, change to a directory that contains a WordPress plugin or theme:
 $ cd ~/gutenberg
 ```
 
+Then, create a .wp-env.json file in that directory to map the local plugin files to the running environment:
+
+```json
+{
+    "core": null,
+    "plugins": [ "." ]
+}
+```
+
 Then, start the local environment:
 
 ```sh
@@ -463,7 +472,7 @@ Options:
 
 ### `wp-env install-path`
 
-Get the path where all of the environment files are stored. This includes the Docker files, WordPress, PHPUnit files, and any sources that were downloaded.
+Get the path where all of the environment files are stored. This includes the Docker files, WordPress, PHPUnit files, and any sources that were downloaded, and will be different depending on the directory from which wp-env is run.
 
 Example:
 
@@ -471,6 +480,12 @@ Example:
 $ wp-env install-path
 
 /home/user/.wp-env/63263e6506becb7b8613b02d42280a49
+```
+
+See the docker-compose.yml to view the volume mappings with:
+
+```sh
+$ less `wp-env install-path`/docker-compose.yml
 ```
 
 ## .wp-env.json
